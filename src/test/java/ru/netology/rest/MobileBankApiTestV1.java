@@ -10,7 +10,7 @@ class MobileBankApiTestV1 {
 
     //проверим схему
     @Test
-    void shouldReturnDemoAccountJSONScheme () {
+    void shouldReturnDemoAccountJSONScheme() {
         given()
                 .baseUri("http://localhost:9999/api/v1")
                 .when()
@@ -19,18 +19,39 @@ class MobileBankApiTestV1 {
                 .body(matchesJsonSchemaInClasspath("accounts.schema.json"));
     }
 
+    //проверим RUB
+    @Test
+    void shouldReturnDemoAccountRUB() {
+        given()
+                .baseUri("http://localhost:9999/api/v1")
+                .when()
+                .get("/demo/accounts")
+                .then()
+                .body("[0].currency", equalTo("RUB"));
+    }
+
+    @Test
+    void shouldReturnDemoAccountUSD() {
+        given()
+                .baseUri("http://localhost:9999/api/v1")
+                .when()
+                .get("/demo/accounts")
+                .then()
+                .body("[1].currency", equalTo("USD"));
+    }
+
 
     @Test
     void shouldReturnDemoAccounts() {
-      // Given - When - Then
-      // Предусловия
-      given()
-          .baseUri("http://localhost:9999/api/v1")
-      // Выполняемые действия
-      .when()
-          .get("/demo/accounts")
-      // Проверки
-      .then()
-          .statusCode(200);
+        // Given - When - Then
+        // Предусловия
+        given()
+                .baseUri("http://localhost:9999/api/v1")
+                // Выполняемые действия
+                .when()
+                .get("/demo/accounts")
+                // Проверки
+                .then()
+                .statusCode(200);
     }
 }
